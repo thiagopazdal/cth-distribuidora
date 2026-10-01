@@ -2,12 +2,17 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>CTH - Panel Admin</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -56,11 +61,12 @@
 
             border-radius: 10px;
 
-            background: linear-gradient(
-                135deg,
-                #e1c45a,
-                #9d7812
-            );
+            background:
+                linear-gradient(
+                    135deg,
+                    #e1c45a,
+                    #9d7812
+                );
 
             font-weight: 900;
         }
@@ -294,6 +300,203 @@
             font-size: 20px;
         }
 
+        /* MODAL */
+
+        .modal {
+            position: fixed;
+
+            inset: 0;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: rgba(0, 0, 0, 0.65);
+
+            z-index: 2000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 600px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            padding: 30px;
+
+            background: white;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            font-size: 25px;
+        }
+
+        .close-button {
+            width: 35px;
+            height: 35px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: #eeeeee;
+
+            cursor: pointer;
+
+            font-size: 18px;
+        }
+
+        /* FORMULARIO */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #dddddd;
+
+            border-radius: 8px;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--gold);
+        }
+
+        .checkbox-group {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin: 20px 0;
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+        }
+
+        .checkbox-group label {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .form-buttons {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 25px;
+        }
+
+        .save-button,
+        .cancel-button {
+            flex: 1;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: 900;
+        }
+
+        .save-button {
+            background: var(--gold);
+
+            color: white;
+        }
+
+        .save-button:hover {
+            background: var(--gold-dark);
+        }
+
+        .cancel-button {
+            background: #eeeeee;
+
+            color: #333;
+        }
+
+        /* IMAGEN */
+
+        .product-preview {
+            display: none;
+
+            width: 100%;
+            height: 180px;
+
+            object-fit: contain;
+
+            margin-top: 10px;
+
+            border-radius: 10px;
+
+            background: #f5f5f5;
+        }
+
+        .product-preview.show {
+            display: block;
+        }
+
         /* CELULAR */
 
         @media (max-width: 700px) {
@@ -317,15 +520,28 @@
 
             .products-header {
                 align-items: flex-start;
+
                 gap: 15px;
+
                 flex-direction: column;
             }
 
+            .add-button {
+                width: 100%;
+            }
+
+            .modal-box {
+                padding: 22px;
+            }
+
         }
+
     </style>
+
 </head>
 
 <body>
+
 
     <!-- HEADER -->
 
@@ -338,11 +554,17 @@
             </div>
 
             <div>
+
                 <strong>CTH</strong>
-                <span>PANEL ADMIN</span>
+
+                <span>
+                    PANEL ADMIN
+                </span>
+
             </div>
 
         </div>
+
 
         <a
             href="index.html"
@@ -359,9 +581,12 @@
 
     <main class="container">
 
+
         <div class="title">
 
-            <span>ADMINISTRACIÓN</span>
+            <span>
+                ADMINISTRACIÓN
+            </span>
 
             <h1>
                 Panel de control
@@ -374,13 +599,14 @@
 
         <section class="stats">
 
+
             <div class="stat">
 
                 <span>
                     Productos
                 </span>
 
-                <strong>
+                <strong id="totalProducts">
                     0
                 </strong>
 
@@ -390,10 +616,10 @@
             <div class="stat">
 
                 <span>
-                    Stock
+                    Stock total
                 </span>
 
-                <strong>
+                <strong id="totalStock">
                     0
                 </strong>
 
@@ -403,14 +629,15 @@
             <div class="stat">
 
                 <span>
-                    Ventas
+                    Valor del catálogo
                 </span>
 
-                <strong>
+                <strong id="totalValue">
                     $0
                 </strong>
 
             </div>
+
 
         </section>
 
@@ -419,14 +646,17 @@
 
         <section>
 
+
             <div class="products-header">
 
                 <h2>
                     Mis productos
                 </h2>
 
+
                 <button
-                    class="add-button">
+                    class="add-button"
+                    id="addProductButton">
 
                     + AGREGAR PRODUCTO
 
@@ -468,26 +698,7 @@
                     </thead>
 
 
-                    <tbody>
-
-                        <tr>
-
-                            <td colspan="5">
-
-                                <div class="empty">
-
-                                    <strong>
-                                        Todavía no hay productos
-                                    </strong>
-
-                                    Agregá tu primer producto
-                                    desde el botón de arriba.
-
-                                </div>
-
-                            </td>
-
-                        </tr>
+                    <tbody id="productsTable">
 
                     </tbody>
 
@@ -495,9 +706,765 @@
 
             </div>
 
+
         </section>
 
+
     </main>
+
+
+    <!-- MODAL -->
+
+    <div
+        class="modal"
+        id="productModal">
+
+
+        <div class="modal-box">
+
+
+            <div class="modal-header">
+
+                <h2 id="modalTitle">
+                    Agregar producto
+                </h2>
+
+
+                <button
+                    class="close-button"
+                    id="closeModal">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <form id="productForm">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Nombre del producto
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productName"
+                        placeholder="Ej: Cargador USB-C"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Descripción
+                    </label>
+
+                    <textarea
+                        id="productDescription"
+                        placeholder="Describe el producto..."
+                        required></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Precio ($)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productPrice"
+                        placeholder="15000"
+                        min="0"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Categoría
+                    </label>
+
+                    <select
+                        id="productCategory"
+                        required>
+
+                        <option value="">
+                            Seleccionar categoría
+                        </option>
+
+                        <option value="Hogar">
+                            Hogar
+                        </option>
+
+                        <option value="Tecnología">
+                            Tecnología
+                        </option>
+
+                        <option value="Cocina">
+                            Cocina
+                        </option>
+
+                        <option value="Otros">
+                            Otros
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Stock
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productStock"
+                        placeholder="10"
+                        min="0"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        URL de la imagen
+                    </label>
+
+                    <input
+                        type="url"
+                        id="productImage"
+                        placeholder="https://...">
+
+                    <img
+                        id="productPreview"
+                        class="product-preview"
+                        alt="Vista previa">
+
+                </div>
+
+
+                <div class="checkbox-group">
+
+                    <input
+                        type="checkbox"
+                        id="productFeatured">
+
+                    <label>
+                        ⭐ Producto destacado
+                    </label>
+
+                </div>
+
+
+                <div class="form-buttons">
+
+                    <button
+                        type="button"
+                        class="cancel-button"
+                        id="cancelButton">
+
+                        CANCELAR
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="save-button">
+
+                        💾 GUARDAR PRODUCTO
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /* ============================
+           DATOS
+        ============================ */
+
+        let products =
+            JSON.parse(
+                localStorage.getItem("cthProducts")
+            ) || [];
+
+        let editingId = null;
+
+
+        /* ============================
+           ELEMENTOS
+        ============================ */
+
+        const modal =
+            document.getElementById("productModal");
+
+        const addButton =
+            document.getElementById("addProductButton");
+
+        const closeButton =
+            document.getElementById("closeModal");
+
+        const cancelButton =
+            document.getElementById("cancelButton");
+
+        const form =
+            document.getElementById("productForm");
+
+        const table =
+            document.getElementById("productsTable");
+
+
+        /* ============================
+           ABRIR MODAL
+        ============================ */
+
+        addButton.addEventListener(
+            "click",
+            () => {
+
+                editingId = null;
+
+                document.getElementById(
+                    "modalTitle"
+                ).textContent =
+                    "Agregar producto";
+
+                form.reset();
+
+                document.getElementById(
+                    "productPreview"
+                ).classList.remove("show");
+
+                modal.classList.add("active");
+
+            }
+        );
+
+
+        /* ============================
+           CERRAR MODAL
+        ============================ */
+
+        function closeModal() {
+
+            modal.classList.remove("active");
+
+            form.reset();
+
+            editingId = null;
+
+            document.getElementById(
+                "productPreview"
+            ).classList.remove("show");
+
+        }
+
+
+        closeButton.addEventListener(
+            "click",
+            closeModal
+        );
+
+        cancelButton.addEventListener(
+            "click",
+            closeModal
+        );
+
+
+        /* ============================
+           GUARDAR PRODUCTO
+        ============================ */
+
+        form.addEventListener(
+            "submit",
+            (event) => {
+
+                event.preventDefault();
+
+
+                const product = {
+
+                    id:
+                        editingId ||
+                        Date.now(),
+
+                    name:
+                        document.getElementById(
+                            "productName"
+                        ).value.trim(),
+
+                    description:
+                        document.getElementById(
+                            "productDescription"
+                        ).value.trim(),
+
+                    price:
+                        Number(
+                            document.getElementById(
+                                "productPrice"
+                            ).value
+                        ),
+
+                    category:
+                        document.getElementById(
+                            "productCategory"
+                        ).value,
+
+                    stock:
+                        Number(
+                            document.getElementById(
+                                "productStock"
+                            ).value
+                        ),
+
+                    image:
+                        document.getElementById(
+                            "productImage"
+                        ).value.trim(),
+
+                    featured:
+                        document.getElementById(
+                            "productFeatured"
+                        ).checked
+
+                };
+
+
+                if (editingId) {
+
+                    products =
+                        products.map(
+                            item =>
+                                item.id === editingId
+                                    ? product
+                                    : item
+                        );
+
+                } else {
+
+                    products.push(product);
+
+                }
+
+
+                localStorage.setItem(
+                    "cthProducts",
+                    JSON.stringify(products)
+                );
+
+
+                renderProducts();
+
+                closeModal();
+
+            }
+        );
+
+
+        /* ============================
+           MOSTRAR PRODUCTOS
+        ============================ */
+
+        function renderProducts() {
+
+            table.innerHTML = "";
+
+
+            if (products.length === 0) {
+
+                table.innerHTML = `
+
+                    <tr>
+
+                        <td colspan="5">
+
+                            <div class="empty">
+
+                                <strong>
+                                    Todavía no hay productos
+                                </strong>
+
+                                Agregá tu primer producto
+                                desde el botón de arriba.
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+
+
+            products.forEach(
+                product => {
+
+                    const row =
+                        document.createElement("tr");
+
+
+                    row.innerHTML = `
+
+                        <td>
+
+                            <span class="product-name">
+
+                                ${escapeHTML(
+                                    product.name
+                                )}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="status">
+
+                                ${escapeHTML(
+                                    product.category
+                                )}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="price">
+
+                                ${formatPrice(
+                                    product.price
+                                )}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            ${product.stock}
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="edit"
+                                    onclick="editProduct(${product.id})">
+
+                                    EDITAR
+
+                                </button>
+
+
+                                <button
+                                    class="delete"
+                                    onclick="deleteProduct(${product.id})">
+
+                                    ELIMINAR
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    `;
+
+
+                    table.appendChild(row);
+
+                }
+            );
+
+
+            updateStats();
+
+        }
+
+
+        /* ============================
+           EDITAR
+        ============================ */
+
+        window.editProduct =
+            function(id) {
+
+                const product =
+                    products.find(
+                        item => item.id === id
+                    );
+
+
+                if (!product) return;
+
+
+                editingId = id;
+
+
+                document.getElementById(
+                    "modalTitle"
+                ).textContent =
+                    "Editar producto";
+
+
+                document.getElementById(
+                    "productName"
+                ).value =
+                    product.name;
+
+
+                document.getElementById(
+                    "productDescription"
+                ).value =
+                    product.description;
+
+
+                document.getElementById(
+                    "productPrice"
+                ).value =
+                    product.price;
+
+
+                document.getElementById(
+                    "productCategory"
+                ).value =
+                    product.category;
+
+
+                document.getElementById(
+                    "productStock"
+                ).value =
+                    product.stock;
+
+
+                document.getElementById(
+                    "productImage"
+                ).value =
+                    product.image || "";
+
+
+                document.getElementById(
+                    "productFeatured"
+                ).checked =
+                    product.featured;
+
+
+                updatePreview();
+
+
+                modal.classList.add("active");
+
+            };
+
+
+        /* ============================
+           ELIMINAR
+        ============================ */
+
+        window.deleteProduct =
+            function(id) {
+
+                const product =
+                    products.find(
+                        item => item.id === id
+                    );
+
+
+                if (!product) return;
+
+
+                const confirmDelete =
+                    confirm(
+                        `¿Eliminar "${product.name}"?`
+                    );
+
+
+                if (!confirmDelete) return;
+
+
+                products =
+                    products.filter(
+                        item => item.id !== id
+                    );
+
+
+                localStorage.setItem(
+                    "cthProducts",
+                    JSON.stringify(products)
+                );
+
+
+                renderProducts();
+
+            };
+
+
+        /* ============================
+           ESTADÍSTICAS
+        ============================ */
+
+        function updateStats() {
+
+            const totalProducts =
+                products.length;
+
+
+            const totalStock =
+                products.reduce(
+                    (total, product) =>
+                        total + product.stock,
+                    0
+                );
+
+
+            const totalValue =
+                products.reduce(
+                    (total, product) =>
+                        total +
+                        (product.price *
+                        product.stock),
+                    0
+                );
+
+
+            document.getElementById(
+                "totalProducts"
+            ).textContent =
+                totalProducts;
+
+
+            document.getElementById(
+                "totalStock"
+            ).textContent =
+                totalStock;
+
+
+            document.getElementById(
+                "totalValue"
+            ).textContent =
+                formatPrice(totalValue);
+
+        }
+
+
+        /* ============================
+           PRECIO
+        ============================ */
+
+        function formatPrice(value) {
+
+            return "$" +
+                Number(value).toLocaleString(
+                    "es-AR"
+                );
+
+        }
+
+
+        /* ============================
+           SEGURIDAD HTML
+        ============================ */
+
+        function escapeHTML(text) {
+
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        /* ============================
+           VISTA PREVIA
+        ============================ */
+
+        const imageInput =
+            document.getElementById(
+                "productImage"
+            );
+
+        const preview =
+            document.getElementById(
+                "productPreview"
+            );
+
+
+        imageInput.addEventListener(
+            "input",
+            updatePreview
+        );
+
+
+        function updatePreview() {
+
+            const url =
+                imageInput.value.trim();
+
+
+            if (!url) {
+
+                preview.classList.remove("show");
+
+                preview.removeAttribute("src");
+
+                return;
+
+            }
+
+
+            preview.src = url;
+
+            preview.classList.add("show");
+
+        }
+
+
+        /* ============================
+           INICIAR
+        ============================ */
+
+        renderProducts();
+
+    </script>
 
 </body>
 
