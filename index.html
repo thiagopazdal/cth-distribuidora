@@ -3,95 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>CTH Distribuidora</title>
-
+    <meta name="description"
+        content="CTH Distribuidora - Productos para el hogar, tecnología y mucho más.">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
+    <!-- =========================
+         ENCABEZADO
+    ========================== -->
     <header class="header">
-
-        <div class="logo">
-            <div class="logo-icon">CTH</div>
-
+        <a href="#" class="logo">
+            <div class="logo-icon">
+                CTH
+            </div>
             <div class="logo-text">
-                <span>CTH</span>
-                <small>Distribuidora</small>
+                <strong>CTH</strong>
+                <span>Distribuidora</span>
             </div>
-        </div>
-
+        </a>
+        <nav class="nav">
+            <a href="#inicio">Inicio</a>
+            <a href="#productos">Productos</a>
+            <a href="#nosotros">Nosotros</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
     </header>
-
-
     <main>
-
-        <section class="hero">
-
+        <!-- =========================
+             INICIO
+        ========================== -->
+        <section class="hero" id="inicio">
             <div class="hero-content">
-
-                <p class="subtitle">CTH DISTRIBUIDORA</p>
-
+                <span class="hero-tag">
+                    ✦ CTH DISTRIBUIDORA
+                </span>
                 <h1>
-                    Todo lo que necesitás,
-                    <span>en un solo lugar.</span>
+                    Todo lo que
+                    <span>necesitás.</span>
                 </h1>
-
-                <p class="description">
-                    Descubrí nuestros productos para el hogar,
-                    tecnología y mucho más.
+                <p>
+                    Encontrá productos para tu hogar,
+                    tecnología, cocina y mucho más,
+                    en un solo lugar.
                 </p>
-
-                <a href="#productos" class="button">
-                    VER PRODUCTOS
-                </a>
-
-            </div>
-
-        </section>
-
-
-        <section id="productos" class="products">
-
-            <p class="section-subtitle">NUESTROS PRODUCTOS</p>
-
-            <h2>Productos destacados</h2>
-
-            <div class="products-container">
-
-                <div class="product-card">
-
-                    <div class="product-image">
-                        📦
-                    </div>
-
-                    <h3>Producto próximamente</h3>
-
-                    <p>
-                        Acá aparecerá la información
-                        del producto.
-                    </p>
-
-                    <strong>$10.000</strong>
-
+                <div class="hero-buttons">
+                    <a href="#productos" class="button primary">
+                        VER PRODUCTOS
+                    </a>
+                    <a href="#contacto" class="button secondary">
+                        CONTACTARNOS
+                    </a>
                 </div>
-
             </div>
-
+            <!-- Tarjeta visual -->
+            <div class="hero-card">
+                <div class="gold-circle"></div>
+                <div class="hero-card-content">
+                    <span>CTH</span>
+                    <h2>
+                        Calidad.
+                        <br>
+                        Variedad.
+                        <br>
+                        Confianza.
+                    </h2>
+                    <p>
+                        Productos seleccionados
+                        para vos.
+                    </p>
+                </div>
+            </div>
         </section>
-
+        <!-- =========================
+             CATEGORÍAS
+        ========================== -->
+        <section class="categories">
+            <div class="section-title">
+                <span>CATEGORÍAS</span>
+                <h2>
+                    Encontrá lo que buscás
+                </h2>
+            </div>
+            <div class="category-grid">
+                <a href="#productos" class="category-card">
+                    <div class="category-icon">🏠</div>
+                    <h3>Hogar</h3>
+                    <p>Productos para tu casa.</p>
+                </a>
+                <a href="#productos" class="category-card">
+                    <div class="category-icon">📱</div>
+                    <h3>Tecnología</h3>
+                    <p>Accesorios y electrónicos.</p>
+                </a>
+                <a href="#productos" class="category-card">
+                    <div class="category-icon">🍳</div>
+                    <h3>Cocina</h3>
+                    <p>Productos para cocinar.</p>
+                </a>
+                <a href="#productos" class="category-card">
+                    <div class="category-icon">✨</div>
+                    <h3>Otros</h3>
+                    <p>Muchos productos más.</p>
+                </a>
+            </div>
+        </section>
+        <!-- =========================
+             PRODUCTOS
+        ========================== -->
+        <section class="products" id="productos">
+            <div class="section-title">
+                <span>CATÁLOGO</span>
+                <h2>
+                    Productos destacados
+                </h2>
+                <p>
+                    Próximamente vas a encontrar
+                    todos nuestros productos acá.
+                </p>
+            </div>
+            <div class="products-container">
+                <!-- PRODUCTO 1 -->
+                <article class="product-card">
+                    <div class="product-image">
+                        <span>📦</span>
+                    </div>
+                    <div class="product-info">
+                        <small>
+                            PRÓXIMAMENTE
+                        </small>
+                        <h3>
+                            Producto destacado
+                        </h3>
+                        <p>
+                            Acá aparecerá la descripción
+                            del producto.
+                        </p>
+                        <div class="product-bottom">
+                            <strong>
+                                Consultar
+                            </strong>
+                            <a href="#contacto">
+                                →
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                <!-- PRODUCTO 2 -->
+                <article class="product-card">
+                    <div class="product-image">
+                        <span>🛍️</span>
+                    </div>
+                    <div class="product-info">
+                        <small>
+                            PRÓXIMAMENTE
+                        </small>
+                        <h3>
+                            Producto destacado
+                        </h3>
+                        <p>
+                            Acá aparecerá la descripción
+                            del producto.
+                        </p>
+                        <div class="product-bottom">
+                            <strong>
+                                Consultar
+                            </strong>
+                            <a href="#contacto">
+                                →
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                <!-- PRODUCTO 3 -->
+                <article class="product-card">
+                    <div class="product-image">
+                        <span>⭐</span>
+                    </div>
+                    <div class="product-info">
+                        <small>
+                            PRÓXIMAMENTE
+                        </small>
+                        <h3>
+                            Producto destacado
+                        </h3>
+                        <p>
+                            Acá aparecerá la descripción
+                            del producto.
+                        </p>
+                        <div class="product-bottom">
+                            <strong>
+                                Consultar
+                            </strong>
+                            <a href="#contacto">
+                                →
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <!-- =========================
+             NOSOTROS
+        ========================== -->
+        <section class="about" id="nosotros">
+            <div class="about-content">
+                <span>
+                    SOBRE CTH
+                </span>
+                <h2>
+                    Una distribuidora
+                    pensada para vos.
+                </h2>
+                <p>
+                    En CTH Distribuidora buscamos ofrecer
+                    productos variados, útiles y accesibles
+                    para todos los días.
+                </p>
+                <p>
+                    Estamos construyendo nuestro catálogo
+                    para que puedas encontrar todo
+                    fácilmente desde tu celular.
+                </p>
+            </div>
+            <div class="about-number">
+                <strong>
+                    CTH
+                </strong>
+                <span>
+                    DISTRIBUIDORA
+                </span>
+            </div>
+        </section>
+        <!-- =========================
+             CONTACTO
+        ========================== -->
+        <section class="contact" id="contacto">
+            <div class="contact-box">
+                <span>
+                    ¿TENÉS ALGUNA CONSULTA?
+                </span>
+                <h2>
+                    Hablemos.
+                </h2>
+                <p>
+                    Consultá disponibilidad,
+                    precios o cualquier producto.
+                </p>
+                <a
+                    href="#"
+                    class="whatsapp-button"
+                    id="whatsappButton">
+                    💬 ESCRIBIR POR WHATSAPP
+                </a>
+            </div>
+        </section>
     </main>
-
-
+    <!-- =========================
+         PIE DE PÁGINA
+    ========================== -->
     <footer>
-
-        <p>© 2026 CTH Distribuidora</p>
-
+        <div class="footer-logo">
+            <strong>CTH</strong>
+            <span>
+                Distribuidora
+            </span>
+        </div>
+        <p>
+            © 2026 CTH Distribuidora.
+            Todos los derechos reservados.
+        </p>
     </footer>
-
-
     <script src="script.js"></script>
-
 </body>
 </html>
