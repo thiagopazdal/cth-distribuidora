@@ -617,3 +617,350 @@ footer p {
         text-align: center;
     }
 }
+/* =========================
+   CARRITO
+========================= */
+
+.cart-floating {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+
+    width: 60px;
+    height: 60px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: var(--black);
+    color: var(--gold-light);
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    z-index: 1000;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+
+    transition: 0.3s;
+}
+
+.cart-floating:hover {
+    transform: translateY(-4px);
+}
+
+
+#cartCount {
+    position: absolute;
+
+    top: -5px;
+    right: -5px;
+
+    min-width: 22px;
+    height: 22px;
+
+    padding: 2px 6px;
+
+    border-radius: 50%;
+
+    background: var(--gold);
+
+    color: white;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* FONDO OSCURO */
+
+.cart-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.45);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.3s;
+
+    z-index: 1999;
+}
+
+.cart-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* PANEL */
+
+.cart-panel {
+    position: fixed;
+
+    top: 0;
+    right: 0;
+
+    width: 420px;
+    max-width: 100%;
+
+    height: 100vh;
+
+    background: white;
+
+    z-index: 2000;
+
+    transform: translateX(100%);
+
+    transition: 0.35s;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+}
+
+.cart-panel.active {
+    transform: translateX(0);
+}
+
+
+/* HEADER */
+
+.cart-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 22px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.cart-header h2 {
+    margin: 0;
+
+    color: var(--black);
+
+    font-size: 22px;
+}
+
+.close-cart {
+    border: none;
+
+    background: transparent;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    color: var(--gray);
+}
+
+
+/* PRODUCTOS */
+
+.cart-items {
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 20px;
+}
+
+.empty-cart {
+    text-align: center;
+
+    color: var(--gray);
+
+    padding: 40px 10px;
+}
+
+
+/* ITEM */
+
+.cart-item {
+    display: flex;
+
+    gap: 12px;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.cart-item-image {
+    width: 70px;
+    height: 70px;
+
+    border-radius: 10px;
+
+    background: var(--light);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    flex-shrink: 0;
+}
+
+.cart-item-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-info h3 {
+    margin: 0 0 5px;
+
+    font-size: 15px;
+
+    color: var(--black);
+}
+
+.cart-item-price {
+    color: var(--gold-dark);
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+
+/* CANTIDAD */
+
+.quantity-controls {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.quantity-controls button {
+    width: 28px;
+    height: 28px;
+
+    border: 1px solid var(--border);
+
+    background: white;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.quantity-controls span {
+    min-width: 20px;
+
+    text-align: center;
+
+    font-weight: bold;
+}
+
+
+/* ELIMINAR */
+
+.remove-item {
+    border: none;
+
+    background: transparent;
+
+    color: #b00020;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    margin-left: auto;
+}
+
+
+/* FOOTER */
+
+.cart-footer {
+    padding: 20px;
+
+    border-top: 1px solid var(--border);
+
+    background: white;
+}
+
+.cart-total {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 15px;
+
+    font-size: 18px;
+}
+
+.cart-total strong {
+    color: var(--gold-dark);
+
+    font-size: 22px;
+}
+
+
+/* BOTÓN WHATSAPP */
+
+.checkout-button {
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: var(--black);
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.checkout-button:hover {
+    background: var(--gold-dark);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .cart-panel {
+        width: 100%;
+    }
+
+    .cart-floating {
+        right: 18px;
+        bottom: 18px;
+    }
+
+}
