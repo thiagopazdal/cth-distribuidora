@@ -1105,13 +1105,15 @@ footer p {
 @media (max-width: 600px) {
 
     .category-filters {
-        gap: 8px;
+        gap: 10px;
         padding: 0 10px;
     }
 
     .category-filter {
-        padding: 9px 13px;
-        font-size: 13px;
+        padding: 11px 18px;
+        min-width: 100px;
+        height: 45px;
+        font-size: 14px;
     }
 
 }
