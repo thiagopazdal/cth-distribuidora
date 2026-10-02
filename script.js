@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+mi document.addEventListener("DOMContentLoaded", () => {
 
     const productsContainer =
         document.querySelector(".products-container");
@@ -51,14 +51,17 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("checkoutButton");
 
 
-    /* =========================
-       BUSCADOR
-    ========================= */
+/* =========================
+   BUSCADOR + CATEGORÍAS
+========================= */
 
-    const searchInput =
-        document.getElementById("productSearch");
+const searchInput =
+    document.getElementById("productSearch");
 
+const categoryButtons =
+    document.querySelectorAll(".category-filter");
 
+let selectedCategory = "Todos";
     /* =========================
        MOSTRAR PRODUCTOS
     ========================= */
