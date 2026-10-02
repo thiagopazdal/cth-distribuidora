@@ -1053,3 +1053,62 @@ footer p {
 
     pointer-events: none;
 }
+/* =========================
+   FILTROS DE CATEGORÍA
+========================= */
+
+.category-filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 auto 30px;
+}
+
+.category-filter {
+    border: 1px solid var(--border);
+    background: white;
+    color: var(--black);
+
+    padding: 10px 18px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.category-filter:hover {
+    border-color: var(--gold);
+    color: var(--gold-dark);
+}
+
+.category-filter.active {
+    background: var(--black);
+    color: white;
+    border-color: var(--black);
+}
+
+.category-filter.active:hover {
+    background: var(--gold-dark);
+    border-color: var(--gold-dark);
+}
+
+@media (max-width: 600px) {
+
+    .category-filters {
+        gap: 8px;
+        padding: 0 10px;
+    }
+
+    .category-filter {
+        padding: 9px 13px;
+        font-size: 13px;
+    }
+
+}
