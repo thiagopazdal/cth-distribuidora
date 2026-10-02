@@ -964,3 +964,37 @@ footer p {
     }
 
 }
+/* BOTÓN AGREGAR AL CARRITO */
+
+.buy-product {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 100px;
+    padding: 10px 16px;
+
+    border-radius: 8px;
+
+    background: var(--black);
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    white-space: nowrap;
+
+    transition: 0.3s;
+}
+
+.buy-product:hover {
+    background: var(--gold-dark);
+    transform: translateY(-2px);
+}
+
+.buy-product.disabled {
+    cursor: not-allowed;
+    transform: none;
+}
