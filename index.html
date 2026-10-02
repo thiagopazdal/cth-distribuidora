@@ -274,6 +274,44 @@
             Todos los derechos reservados.
         </p>
     </footer>
+    <!-- CARRITO -->
+<button id="cartButton" class="cart-floating">
+    🛒
+    <span id="cartCount">0</span>
+</button>
+
+<div id="cartOverlay" class="cart-overlay"></div>
+
+<div id="cartPanel" class="cart-panel">
+
+    <div class="cart-header">
+        <h2>🛒 Mi carrito</h2>
+
+        <button id="closeCart" class="close-cart">
+            ✕
+        </button>
+    </div>
+
+    <div id="cartItems" class="cart-items">
+        <p class="empty-cart">
+            Tu carrito está vacío.
+        </p>
+    </div>
+
+    <div class="cart-footer">
+
+        <div class="cart-total">
+            <span>Total</span>
+            <strong id="cartTotal">$0</strong>
+        </div>
+
+        <button id="checkoutButton" class="checkout-button">
+            FINALIZAR PEDIDO
+        </button>
+
+    </div>
+
+</div>
     <script src="script.js"></script>
 </body>
 </html>
