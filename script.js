@@ -5,10 +5,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!productsContainer) return;
 
+
+    /* =========================
+       PRODUCTOS
+    ========================= */
+
     const products =
         JSON.parse(localStorage.getItem("cthProducts")) || [];
 
+
+    /* =========================
+       CARRITO
+    ========================= */
+
+    let cart =
+        JSON.parse(localStorage.getItem("cthCart")) || [];
+
+
+    /* =========================
+       MOSTRAR PRODUCTOS
+    ========================= */
+
     productsContainer.innerHTML = "";
+
 
     if (products.length === 0) {
 
@@ -18,157 +37,671 @@ document.addEventListener("DOMContentLoaded", () => {
                 text-align: center;
                 padding: 50px 20px;
             ">
+
                 <h3>No hay productos disponibles</h3>
+
                 <p>
                     Próximamente vas a encontrar
                     nuestros productos acá.
                 </p>
+
             </div>
         `;
 
-        return;
-    }
+    } else {
+
+        products.forEach(product => {
+
+            const card =
+                document.createElement("article");
+
+            card.className = "product-card";
 
 
-    products.forEach(product => {
-
-        const card =
-            document.createElement("article");
-
-        card.className = "product-card";
+            const stock =
+                Number(product.stock) || 0;
 
 
-        const imageHTML = product.image
-            ? `<img
-                src="${escapeHTML(product.image)}"
-                alt="${escapeHTML(product.name)}"
-                style="
-                    width:100%;
-                    height:100%;
-                    object-fit:contain;
-                ">`
-            : `<span>📦</span>`;
+            const imageHTML = product.image
+
+                ? `
+                    <img
+                        src="${escapeHTML(product.image)}"
+                        alt="${escapeHTML(product.name)}"
+                        style="
+                            width:100%;
+                            height:100%;
+                            object-fit:contain;
+                        "
+                    >
+                `
+
+                : `<span>📦</span>`;
 
 
-        card.innerHTML = `
-
-            <div class="product-image">
-
-                ${imageHTML}
-
-            </div>
+            let buttonHTML;
 
 
-            <div class="product-info">
+            if (stock <= 0) {
 
-                ${product.featured
-                    ? `<small>⭐ DESTACADO</small>`
-                    : `<small>${escapeHTML(product.category)}</small>`
-                }
+                buttonHTML = `
+                    <a
+                        href="#"
+                        class="buy-product disabled"
+                        style="
+                            opacity:0.5;
+                            pointer-events:none;
+                        "
+                    >
+                        SIN STOCK
+                    </a>
+                `;
 
+            } else {
 
-                <h3>
-                    ${escapeHTML(product.name)}
-                </h3>
-
-
-                <p>
-                    ${escapeHTML(product.description)}
-                </p>
-
-
-                <div class="product-bottom">
-
-                    <strong>
-                        $${Number(product.price)
-                            .toLocaleString("es-AR")}
-                    </strong>
-
-
+                buttonHTML = `
                     <a
                         href="#"
                         class="buy-product"
-                        data-id="${product.id}">
-
-                        COMPRAR
-
+                        data-id="${product.id}"
+                    >
+                        AGREGAR
                     </a>
+                `;
+
+            }
+
+
+            card.innerHTML = `
+
+                <div class="product-image">
+
+                    ${imageHTML}
 
                 </div>
 
-            </div>
 
-        `;
+                <div class="product-info">
 
+                    ${
+                        product.featured
 
-        productsContainer.appendChild(card);
+                        ? `<small>⭐ DESTACADO</small>`
 
-    });
-
-
-    /* BOTONES COMPRAR */
-
-    document
-        .querySelectorAll(".buy-product")
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                event => {
-
-                    event.preventDefault();
-
-                    const id =
-                        Number(
-                            button.dataset.id
-                        );
-
-                    const product =
-                        products.find(
-                            item => item.id === id
-                        );
-
-                    if (!product) return;
+                        : `<small>
+                            ${escapeHTML(product.category)}
+                          </small>`
+                    }
 
 
-                    const message =
-                        `Hola CTH Distribuidora 👋
-
-Quiero comprar:
-
-🛍️ ${product.name}
-💰 $${Number(product.price)
-    .toLocaleString("es-AR")}
-
-¿Sigue disponible?`;
+                    <h3>
+                        ${escapeHTML(product.name)}
+                    </h3>
 
 
-                    const url =
-                        `https://wa.me/5493813929798?text=${
-                            encodeURIComponent(message)
-                        }`;
+                    <p>
+                        ${escapeHTML(product.description)}
+                    </p>
 
 
-                    window.open(
-                        url,
-                        "_blank"
-                    );
+                    <div class="product-bottom">
 
-                }
-            );
+                        <strong>
+                            $${Number(product.price)
+                                .toLocaleString("es-AR")}
+                        </strong>
+
+
+                        ${buttonHTML}
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            productsContainer.appendChild(card);
 
         });
+
+    }
+
+
+    /* =========================
+       ELEMENTOS DEL CARRITO
+    ========================= */
+
+    const cartButton =
+        document.getElementById("cartButton");
+
+    const cartPanel =
+        document.getElementById("cartPanel");
+
+    const cartOverlay =
+        document.getElementById("cartOverlay");
+
+    const closeCart =
+        document.getElementById("closeCart");
+
+    const cartItems =
+        document.getElementById("cartItems");
+
+    const cartCount =
+        document.getElementById("cartCount");
+
+    const cartTotal =
+        document.getElementById("cartTotal");
+
+    const checkoutButton =
+        document.getElementById("checkoutButton");
+
+
+    /* =========================
+       GUARDAR CARRITO
+    ========================= */
+
+    function saveCart() {
+
+        localStorage.setItem(
+            "cthCart",
+            JSON.stringify(cart)
+        );
+
+    }
+
+
+    /* =========================
+       ABRIR CARRITO
+    ========================= */
+
+    function openCart() {
+
+        cartPanel.classList.add("active");
+
+        cartOverlay.classList.add("active");
+
+    }
+
+
+    /* =========================
+       CERRAR CARRITO
+    ========================= */
+
+    function closeCartPanel() {
+
+        cartPanel.classList.remove("active");
+
+        cartOverlay.classList.remove("active");
+
+    }
+
+
+    /* =========================
+       ACTUALIZAR CARRITO
+    ========================= */
+
+    function renderCart() {
+
+        cartItems.innerHTML = "";
+
+
+        let total = 0;
+
+        let quantityTotal = 0;
+
+
+        if (cart.length === 0) {
+
+            cartItems.innerHTML = `
+                <p class="empty-cart">
+                    Tu carrito está vacío.
+                </p>
+            `;
+
+        }
+
+
+        cart.forEach(item => {
+
+            const product =
+                products.find(
+                    p => Number(p.id) === Number(item.id)
+                );
+
+
+            if (!product) return;
+
+
+            const price =
+                Number(product.price) || 0;
+
+
+            const stock =
+                Number(product.stock) || 0;
+
+
+            if (item.quantity > stock) {
+
+                item.quantity = stock;
+
+            }
+
+
+            if (item.quantity <= 0) return;
+
+
+            const subtotal =
+                price * item.quantity;
+
+
+            total += subtotal;
+
+            quantityTotal += item.quantity;
+
+
+            const imageHTML =
+                product.image
+
+                ? `
+                    <img
+                        src="${escapeHTML(product.image)}"
+                        alt="${escapeHTML(product.name)}"
+                    >
+                `
+
+                : `📦`;
+
+
+            const itemElement =
+                document.createElement("div");
+
+            itemElement.className =
+                "cart-item";
+
+
+            itemElement.innerHTML = `
+
+                <div class="cart-item-image">
+
+                    ${imageHTML}
+
+                </div>
+
+
+                <div class="cart-item-info">
+
+                    <h3>
+                        ${escapeHTML(product.name)}
+                    </h3>
+
+
+                    <div class="cart-item-price">
+
+                        $${price.toLocaleString("es-AR")}
+
+                    </div>
+
+
+                    <div class="quantity-controls">
+
+                        <button
+                            class="decrease"
+                            data-id="${product.id}"
+                        >
+                            −
+                        </button>
+
+
+                        <span>
+                            ${item.quantity}
+                        </span>
+
+
+                        <button
+                            class="increase"
+                            data-id="${product.id}"
+                            ${item.quantity >= stock
+                                ? "disabled"
+                                : ""}
+                        >
+                            +
+                        </button>
+
+
+                        <button
+                            class="remove-item"
+                            data-id="${product.id}"
+                        >
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            cartItems.appendChild(itemElement);
+
+        });
+
+
+        cartCount.textContent =
+            quantityTotal;
+
+
+        cartTotal.textContent =
+            `$${total.toLocaleString("es-AR")}`;
+
+
+        saveCart();
+
+    }
+
+
+    /* =========================
+       AGREGAR AL CARRITO
+    ========================= */
+
+    productsContainer.addEventListener(
+        "click",
+        event => {
+
+            const button =
+                event.target.closest(".buy-product");
+
+
+            if (!button) return;
+
+
+            event.preventDefault();
+
+
+            const id =
+                Number(button.dataset.id);
+
+
+            const product =
+                products.find(
+                    p => Number(p.id) === id
+                );
+
+
+            if (!product) return;
+
+
+            const stock =
+                Number(product.stock) || 0;
+
+
+            if (stock <= 0) return;
+
+
+            const existing =
+                cart.find(
+                    item => Number(item.id) === id
+                );
+
+
+            if (existing) {
+
+                if (existing.quantity < stock) {
+
+                    existing.quantity++;
+
+                }
+
+            } else {
+
+                cart.push({
+                    id: id,
+                    quantity: 1
+                });
+
+            }
+
+
+            saveCart();
+
+            renderCart();
+
+            openCart();
+
+        }
+    );
+
+
+    /* =========================
+       BOTONES DEL CARRITO
+    ========================= */
+
+    cartItems.addEventListener(
+        "click",
+        event => {
+
+            const button =
+                event.target.closest("button");
+
+
+            if (!button) return;
+
+
+            const id =
+                Number(button.dataset.id);
+
+
+            const item =
+                cart.find(
+                    item => Number(item.id) === id
+                );
+
+
+            if (!item) return;
+
+
+            const product =
+                products.find(
+                    p => Number(p.id) === id
+                );
+
+
+            if (!product) return;
+
+
+            const stock =
+                Number(product.stock) || 0;
+
+
+            /* RESTAR */
+
+            if (
+                button.classList.contains("decrease")
+            ) {
+
+                item.quantity--;
+
+
+                if (item.quantity <= 0) {
+
+                    cart =
+                        cart.filter(
+                            item =>
+                                Number(item.id) !== id
+                        );
+
+                }
+
+            }
+
+
+            /* SUMAR */
+
+            if (
+                button.classList.contains("increase")
+            ) {
+
+                if (item.quantity < stock) {
+
+                    item.quantity++;
+
+                }
+
+            }
+
+
+            /* ELIMINAR */
+
+            if (
+                button.classList.contains("remove-item")
+            ) {
+
+                cart =
+                    cart.filter(
+                        item =>
+                            Number(item.id) !== id
+                    );
+
+            }
+
+
+            saveCart();
+
+            renderCart();
+
+        }
+    );
+
+
+    /* =========================
+       FINALIZAR PEDIDO
+    ========================= */
+
+    checkoutButton.addEventListener(
+        "click",
+        () => {
+
+            if (cart.length === 0) {
+
+                alert("Tu carrito está vacío.");
+
+                return;
+
+            }
+
+
+            let message =
+                `Hola CTH Distribuidora 👋
+
+Quiero hacer este pedido:
+
+`;
+
+
+            let total = 0;
+
+
+            cart.forEach(item => {
+
+                const product =
+                    products.find(
+                        p =>
+                            Number(p.id) ===
+                            Number(item.id)
+                    );
+
+
+                if (!product) return;
+
+
+                const subtotal =
+                    Number(product.price) *
+                    item.quantity;
+
+
+                total += subtotal;
+
+
+                message +=
+                    `🛍️ ${product.name} x${item.quantity}
+💰 $${subtotal.toLocaleString("es-AR")}
+
+`;
+
+            });
+
+
+            message +=
+                `━━━━━━━━━━━━
+TOTAL: $${total.toLocaleString("es-AR")}
+━━━━━━━━━━━━
+
+¿Me confirman disponibilidad?`;
+
+
+            const url =
+                `https://wa.me/5493813929798?text=${
+                    encodeURIComponent(message)
+                }`;
+
+
+            window.open(
+                url,
+                "_blank"
+            );
+
+        }
+    );
+
+
+    /* =========================
+       EVENTOS DEL PANEL
+    ========================= */
+
+    cartButton.addEventListener(
+        "click",
+        openCart
+    );
+
+
+    closeCart.addEventListener(
+        "click",
+        closeCartPanel
+    );
+
+
+    cartOverlay.addEventListener(
+        "click",
+        closeCartPanel
+    );
+
+
+    /* =========================
+       INICIAR
+    ========================= */
+
+    renderCart();
 
 });
 
 
+/* =========================
+   SEGURIDAD HTML
+========================= */
+
 function escapeHTML(text) {
 
     return String(text)
+
         .replace(/&/g, "&amp;")
+
         .replace(/</g, "&lt;")
+
         .replace(/>/g, "&gt;")
+
         .replace(/"/g, "&quot;")
+
         .replace(/'/g, "&#039;");
 
 }
