@@ -23,34 +23,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================
+       ELEMENTOS DEL CARRITO
+    ========================= */
+
+    const cartButton =
+        document.getElementById("cartButton");
+
+    const cartPanel =
+        document.getElementById("cartPanel");
+
+    const cartOverlay =
+        document.getElementById("cartOverlay");
+
+    const closeCart =
+        document.getElementById("closeCart");
+
+    const cartItems =
+        document.getElementById("cartItems");
+
+    const cartCount =
+        document.getElementById("cartCount");
+
+    const cartTotal =
+        document.getElementById("cartTotal");
+
+    const checkoutButton =
+        document.getElementById("checkoutButton");
+
+
+    /* =========================
+       BUSCADOR
+    ========================= */
+
+    const searchInput =
+        document.getElementById("productSearch");
+
+
+    /* =========================
        MOSTRAR PRODUCTOS
     ========================= */
 
-    productsContainer.innerHTML = "";
+    function renderProducts(productList) {
+
+        productsContainer.innerHTML = "";
 
 
-    if (products.length === 0) {
+        if (productList.length === 0) {
 
-        productsContainer.innerHTML = `
-            <div style="
-                grid-column: 1 / -1;
-                text-align: center;
-                padding: 50px 20px;
-            ">
+            productsContainer.innerHTML = `
+                <div style="
+                    grid-column: 1 / -1;
+                    text-align: center;
+                    padding: 50px 20px;
+                ">
 
-                <h3>No hay productos disponibles</h3>
+                    <h3>No encontramos productos</h3>
 
-                <p>
-                    Próximamente vas a encontrar
-                    nuestros productos acá.
-                </p>
+                    <p>
+                        Probá buscando otro nombre.
+                    </p>
 
-            </div>
-        `;
+                </div>
+            `;
 
-    } else {
+            return;
 
-        products.forEach(product => {
+        }
+
+
+        productList.forEach(product => {
 
             const card =
                 document.createElement("article");
@@ -169,32 +210,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================
-       ELEMENTOS DEL CARRITO
+       INICIAR PRODUCTOS
     ========================= */
 
-    const cartButton =
-        document.getElementById("cartButton");
+    renderProducts(products);
 
-    const cartPanel =
-        document.getElementById("cartPanel");
 
-    const cartOverlay =
-        document.getElementById("cartOverlay");
+    /* =========================
+       BUSCAR
+    ========================= */
 
-    const closeCart =
-        document.getElementById("closeCart");
+    if (searchInput) {
 
-    const cartItems =
-        document.getElementById("cartItems");
+        searchInput.addEventListener(
+            "input",
+            () => {
 
-    const cartCount =
-        document.getElementById("cartCount");
+                const search =
+                    searchInput.value
+                        .toLowerCase()
+                        .trim();
 
-    const cartTotal =
-        document.getElementById("cartTotal");
 
-    const checkoutButton =
-        document.getElementById("checkoutButton");
+                if (search === "") {
+
+                    renderProducts(products);
+
+                    return;
+
+                }
+
+
+                const filteredProducts =
+                    products.filter(product => {
+
+                        const name =
+                            String(product.name || "")
+                                .toLowerCase();
+
+                        const description =
+                            String(product.description || "")
+                                .toLowerCase();
+
+                        const category =
+                            String(product.category || "")
+                                .toLowerCase();
+
+
+                        return (
+                            name.includes(search) ||
+                            description.includes(search) ||
+                            category.includes(search)
+                        );
+
+                    });
+
+
+                renderProducts(filteredProducts);
+
+            }
+        );
+
+    }
 
 
     /* =========================
@@ -266,7 +343,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const product =
                 products.find(
-                    p => Number(p.id) === Number(item.id)
+                    p =>
+                        Number(p.id) ===
+                        Number(item.id)
                 );
 
 
@@ -425,7 +504,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const product =
                 products.find(
-                    p => Number(p.id) === id
+                    p =>
+                        Number(p.id) === id
                 );
 
 
@@ -441,7 +521,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const existing =
                 cart.find(
-                    item => Number(item.id) === id
+                    item =>
+                        Number(item.id) === id
                 );
 
 
@@ -494,7 +575,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const item =
                 cart.find(
-                    item => Number(item.id) === id
+                    item =>
+                        Number(item.id) === id
                 );
 
 
@@ -503,7 +585,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const product =
                 products.find(
-                    p => Number(p.id) === id
+                    p =>
+                        Number(p.id) === id
                 );
 
 
@@ -678,7 +761,7 @@ TOTAL: $${total.toLocaleString("es-AR")}
 
 
     /* =========================
-       INICIAR
+       INICIAR CARRITO
     ========================= */
 
     renderCart();
