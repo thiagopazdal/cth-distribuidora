@@ -967,30 +967,35 @@ footer p {
 /* BOTÓN AGREGAR AL CARRITO */
 
 .buy-product {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 
-    min-width: 100px;
-    padding: 10px 16px;
+    width: auto !important;
+    min-width: 105px !important;
+    height: 40px !important;
 
-    border-radius: 8px;
+    padding: 0 18px !important;
 
-    background: var(--black);
-    color: white;
+    border-radius: 8px !important;
 
-    text-decoration: none;
+    background: var(--black) !important;
+    color: white !important;
 
-    font-size: 13px;
-    font-weight: bold;
+    text-decoration: none !important;
 
-    white-space: nowrap;
+    font-size: 13px !important;
+    font-weight: bold !important;
+
+    white-space: nowrap !important;
+
+    cursor: pointer;
 
     transition: 0.3s;
 }
 
 .buy-product:hover {
-    background: var(--gold-dark);
+    background: var(--gold-dark) !important;
     transform: translateY(-2px);
 }
 
