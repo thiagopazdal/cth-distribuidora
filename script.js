@@ -219,64 +219,94 @@ let selectedCategory = "Todos";
     renderProducts(products);
 
 
-    /* =========================
-       BUSCAR
-    ========================= */
+/* =========================
+   FILTRAR PRODUCTOS
+========================= */
 
-    if (searchInput) {
+function filterProducts() {
 
-        searchInput.addEventListener(
-            "input",
-            () => {
+    const search =
+        searchInput
+            ? searchInput.value.toLowerCase().trim()
+            : "";
 
-                const search =
-                    searchInput.value
-                        .toLowerCase()
-                        .trim();
+    const filteredProducts =
+        products.filter(product => {
 
+            const name =
+                String(product.name || "")
+                    .toLowerCase();
 
-                if (search === "") {
+            const description =
+                String(product.description || "")
+                    .toLowerCase();
 
-                    renderProducts(products);
+            const category =
+                String(product.category || "")
+                    .toLowerCase();
 
-                    return;
+            const matchesSearch =
+                !search ||
+                name.includes(search) ||
+                description.includes(search) ||
+                category.includes(search);
 
-                }
+            const matchesCategory =
+                selectedCategory === "Todos" ||
+                String(product.category || "") ===
+                selectedCategory;
 
+            return (
+                matchesSearch &&
+                matchesCategory
+            );
 
-                const filteredProducts =
-                    products.filter(product => {
+        });
 
-                        const name =
-                            String(product.name || "")
-                                .toLowerCase();
+    renderProducts(filteredProducts);
 
-                        const description =
-                            String(product.description || "")
-                                .toLowerCase();
+}
 
-                        const category =
-                            String(product.category || "")
-                                .toLowerCase();
+/* =========================
+   BUSCADOR
+========================= */
 
+if (searchInput) {
 
-                        return (
-                            name.includes(search) ||
-                            description.includes(search) ||
-                            category.includes(search)
-                        );
+    searchInput.addEventListener(
+        "input",
+        filterProducts
+    );
 
-                    });
+}
 
+/* =========================
+   BOTONES DE CATEGORÍA
+========================= */
 
-                renderProducts(filteredProducts);
+categoryButtons.forEach(button => {
 
-            }
-        );
+    button.addEventListener(
+        "click",
+        () => {
 
-    }
+            selectedCategory =
+                button.dataset.category;
 
+            categoryButtons.forEach(btn => {
 
+                btn.classList.remove("active");
+
+            });
+
+            button.classList.add("active");
+
+            filterProducts();
+
+        }
+    );
+
+});
     /* =========================
        GUARDAR CARRITO
     ========================= */
