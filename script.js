@@ -192,23 +192,19 @@ if (stock <= 0) {
                 </div>
 
 
-                <div class="product-info">
+         <div class="product-info">
 
-                    ${
-                        product.featured
+    ${
+        product.featured
+        ? `<small>⭐ DESTACADO</small>`
+        : `<small>${escapeHTML(product.category)}</small>`
+    }
 
-                        ? `<small>⭐ DESTACADO</small>`
+    ${stockHTML}
 
-                        : `<small>
-                            ${escapeHTML(product.category)}
-                          </small>`
-                    }
-
-
-                    <h3>
-                        ${escapeHTML(product.name)}
-                    </h3>
-
+    <h3>
+        ${escapeHTML(product.name)}
+    </h3>
 
                     <p>
                         ${escapeHTML(product.description)}
