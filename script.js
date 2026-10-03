@@ -122,6 +122,33 @@ let selectedCategory = "Todos";
 
                 : `<span>📦</span>`;
 
+  let stockHTML;
+
+if (stock <= 0) {
+
+    stockHTML = `
+        <small class="stock-status out">
+            🔴 SIN STOCK
+        </small>
+    `;
+
+} else if (stock <= 3) {
+
+    stockHTML = `
+        <small class="stock-status low">
+            🟠 ÚLTIMAS ${stock} UNIDADES
+        </small>
+    `;
+
+} else {
+
+    stockHTML = `
+        <small class="stock-status available">
+            🟢 EN STOCK
+        </small>
+    `;
+
+}
 
             let buttonHTML;
 
