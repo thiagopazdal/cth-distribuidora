@@ -1117,3 +1117,26 @@ footer p {
     }
 
 }
+
+/* =========================
+   ESTADO DEL STOCK
+========================= */
+
+.stock-status {
+    display: block;
+    margin-top: 7px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.stock-status.available {
+    color: #238636;
+}
+
+.stock-status.low {
+    color: #d97706;
+}
+
+.stock-status.out {
+    color: #dc2626;
+}
